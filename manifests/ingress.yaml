@@ -1,19 +1,21 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: todo-ui 
   annotations:
+    argocd.argoproj.io/tracking-id: todo:networking.k8s.io/Ingress:default/todo-ui
     kubernetes.io/ingress.class: azure/application-gateway
+  name: todo-ui
+  namespace: default
 spec:
   ingressClassName: azure-application-gateway
   rules:
-  - host: ui.sohitguptadevops.online
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: todo-ui
-            port:
-              number: 80
+    - host: ui.sohitguptadevops.online
+      http:
+        paths:
+          - backend:
+              service:
+                name: todo-ui
+                port:
+                  number: 80
+            path: /
+            pathType: Prefix
